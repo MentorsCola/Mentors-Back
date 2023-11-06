@@ -95,3 +95,5 @@ ENV/
 .spyderproject
 
 manage.py
+
+user/migrations
