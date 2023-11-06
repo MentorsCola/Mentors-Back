@@ -28,7 +28,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # 생성한 앱
-    'customUser',
+    'user',
 
     # 설치한 라이브러리
     'rest_framework',
@@ -36,7 +36,7 @@ INSTALLED_APPS = [
 ]
 
 # user 앱에서 내가 설정한 User를 사용하겠다고 설정한다.
-AUTH_USER_MODEL = 'CustomUser.User'
+AUTH_USER_MODEL = 'user.User'
 
 # jwt 토큰은 simplejwt의 JWTAuthentication으로 인증한다.
 REST_FRAMEWORK = {
