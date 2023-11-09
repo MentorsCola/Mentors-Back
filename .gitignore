@@ -97,5 +97,6 @@ ENV/
 manage.py
 
 user/migrations
+board/migrations
 
 secrets.json
