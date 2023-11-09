@@ -1,5 +1,11 @@
 from datetime import timedelta
 from pathlib import Path
+import os
+
+from dotenv import load_dotenv
+
+load_dotenv()
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -9,7 +15,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-1qii#2$t-k0hl*7_z5id%e8d5#6khtls-b#m((=3^h9d^4adv-'
+SECRET_KEY = 'jx8(avmtk-(04sldylmx10$44nfyr9=lbc+i-@ckatyugua^@m'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -104,8 +110,7 @@ ROOT_URLCONF = 'MentorsBack.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
-        ,
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -124,10 +129,19 @@ WSGI_APPLICATION = 'MentorsBack.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+dbname = os.getenv('NAME')
+dbuser = os.getenv('USER')
+dbpassword = os.getenv('PASSWORD')
+dbhost = os.getenv('HOST')
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': load_dotenv(dbname),
+        'USER': load_dotenv(dbuser),
+        'PASSWORD': load_dotenv(dbpassword),
+        'HOST': load_dotenv(dbhost),
+        'PORT': '3306',
     }
 }
 
