@@ -1,14 +1,20 @@
+import os.path
 from datetime import timedelta
+from os import environ
 from pathlib import Path
 import os
 
-from dotenv import load_dotenv
-
-load_dotenv()
+from environ import Env
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+env = Env()
+env_path = BASE_DIR / ".env"
+if env_path.exists():
+    with env_path.open("rt", encoding="utf8") as f:
+        env.read_env(f, overwrite=True)
 
 
 # Quick-start development settings - unsuitable for production
@@ -129,18 +135,13 @@ WSGI_APPLICATION = 'MentorsBack.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-dbname = os.getenv('NAME')
-dbuser = os.getenv('USER')
-dbpassword = os.getenv('PASSWORD')
-dbhost = os.getenv('HOST')
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': load_dotenv(dbname),
-        'USER': load_dotenv(dbuser),
-        'PASSWORD': load_dotenv(dbpassword),
-        'HOST': load_dotenv(dbhost),
+        'NAME': os.getenv('dbname'),
+        'USER': os.getenv('dbuser'),
+        'PASSWORD': os.getenv('dbpassword'),
+        'HOST': os.getenv('dbhost'),
         'PORT': '3306',
     }
 }
