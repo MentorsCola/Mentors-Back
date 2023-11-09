@@ -98,4 +98,4 @@ manage.py
 
 user/migrations
 
-/MentorsBack/settings.py
+secrets.json
