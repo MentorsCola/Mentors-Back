@@ -1,7 +1,7 @@
 from django.urls import path, include
 from . import views
 
-app_name = "boards"
+app_name = "board"
 
 urlpatterns = [
     path("board/", views.BoardAPI.as_view(), name="board-list"),
