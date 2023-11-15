@@ -12,6 +12,7 @@ class BoardSerializer(serializers.ModelSerializer):
             "content",
             "dt_created",
             "dt_modified",
+            "like",
         ]
 
     author_email = serializers.SerializerMethodField("get_authors_email")
@@ -30,6 +31,7 @@ class BoardDetailSerializer(serializers.ModelSerializer):
             "content",
             "dt_created",
             "dt_modified",
+            "like",
         ]
 
     author_email = serializers.SerializerMethodField("get_authors_email")
