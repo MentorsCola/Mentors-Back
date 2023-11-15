@@ -9,7 +9,7 @@ from .permissions import IsOwnerOrReadOnly
 
 
 class BoardAPI(generics.ListCreateAPIView): # 로그인하지 않아도 게시글 읽을 수 있음
-    ueryset = Board.objects.all()
+    queryset = Board.objects.all()
     serializer_class = BoardSerializer
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticatedOrReadOnly]
