@@ -15,4 +15,5 @@ urlpatterns = [
     path("api/user/auth/", AuthAPIView.as_view()),  # post - 로그인, delete - 로그아웃, get - 유저정보
     path("api/user/auth/refresh/", TokenRefreshView.as_view()),  # jwt 토큰 재발급
     path("", include(router.urls)),
+    path("", include("board.urls")),
 ]
