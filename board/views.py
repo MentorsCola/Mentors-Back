@@ -17,6 +17,9 @@ class BoardAPI(generics.ListCreateAPIView): # 로그인하지 않아도 게시�
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
 
+    def get_queryset(self):
+        return Board.objects.all()
+
 
 class BoardDetailAPI(generics.RetrieveUpdateDestroyAPIView):
     queryset = Board.objects.all()
