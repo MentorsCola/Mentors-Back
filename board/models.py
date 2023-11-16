@@ -8,7 +8,7 @@ class Board(models.Model):  # 제목, 작성자, 내용, 작성일, 마지막 �
     content = models.TextField("내용", null=False)
     dt_created = models.DateTimeField("작성일", auto_now_add=True, null=False)
     dt_modified = models.DateTimeField("수정일", auto_now_add=True, null=False)
-    like = models.IntegerField("하트")
+    like = models.IntegerField("하트", default=0)
 
     def __str__(self):
         return 'author : {}, title : {}'.format(self.author_id, self.title, self.content)
