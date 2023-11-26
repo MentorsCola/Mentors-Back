@@ -85,7 +85,7 @@ target/
 celerybeat-schedule
 
 # dotenv
-.env
+my_settings.py
 
 # virtualenv
 venv/
@@ -97,3 +97,7 @@ ENV/
 manage.py
 
 user/migrations
+board/migrations
+
+secrets.json
+my_settings.py

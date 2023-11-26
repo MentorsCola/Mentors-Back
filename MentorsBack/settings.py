@@ -1,21 +1,37 @@
+import os.path
 from datetime import timedelta
 from pathlib import Path
+import os, json
+from django.core.exceptions import ImproperlyConfigured
+
+import my_settings
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-1qii#2$t-k0hl*7_z5id%e8d5#6khtls-b#m((=3^h9d^4adv-'
+secret_file = os.path.join(BASE_DIR, 'secrets.json')
+with open(secret_file) as f:
+    secrets = json.loads(f.read())
+
+
+    def get_secret(setting, secrets=secrets):
+        try:
+            return secrets[setting]
+        except KeyError:
+            error_msg = "Set the {} environment variable".format(setting)
+            raise ImproperlyConfigured(error_msg)
+
+
+    SECRET_KEY = get_secret("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -29,6 +45,7 @@ INSTALLED_APPS = [
 
     # 생성한 앱
     'user',
+    'board',
 
     # 설치한 라이브러리
     'rest_framework',
@@ -78,16 +95,15 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
 
-
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
-        # 'rest_framework.permissions.IsAuthenticated', # 인증된 사용자만 접근
+        'rest_framework.permissions.IsAuthenticated', # 인증된 사용자만 접근
         # 'rest_framework.permissions.IsAdminUser', # 관리자만 접근
-        'rest_framework.permissions.AllowAny', # 누구나 접근
+        # 'rest_framework.permissions.AllowAny',  # 누구나 접근
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
 
 }
-
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -104,8 +120,7 @@ ROOT_URLCONF = 'MentorsBack.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
-        ,
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -120,17 +135,10 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'MentorsBack.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
+DATABASES = my_settings.DATABASES
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -150,18 +158,18 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ko-kr'
 
 TIME_ZONE = 'Asia/Seoul'
 
 USE_I18N = True
 
-USE_TZ = True
+USE_TZ = False
 
+APPEND_SLASH = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
